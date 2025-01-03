@@ -1,0 +1,23 @@
+Apex Class Testing (ConsumerRecord):
+Purpose: Test the functionality of the ConsumerRecord class to ensure email notifications are sent correctly.
+Test Class Code:
+
+
+@isTest
+private class ConsumerRecordTest {
+    static testMethod void testSendEmailNotification() {
+        // Create test data
+        consumer__c testConsumer = new consumer__c(
+            Name = 'Test Consumer',
+            email__c = 'test@example.com'
+        );
+        insert testConsumer;
+
+        // Call the method to test
+        List<consumer__c> testConsumers = [SELECT Id, email__c FROM consumer__c];
+        ConsumerRecord.sendEmailNotification(testConsumers);
+
+        // Assert to check email sending logic (Mocking required in some cases)
+        System.assertEquals(1, Limits.getEmailInvocations());
+    }
+}
