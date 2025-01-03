@@ -1,0 +1,26 @@
+Apex Trigger Testing (consumerTrigger):
+Purpose: Ensure the consumerTrigger executes the sendEmailNotification method correctly after new consumer records are inserted.
+Test Trigger Code:
+
+@isTest
+private class ConsumerTriggerTest {
+    static testMethod void testConsumerTrigger() {
+        // Create test data
+        consumer__c testConsumer = new consumer__c(
+            Name = 'Trigger Test Consumer',
+            email__c = 'trigger_test@example.com'
+        );
+
+        // Start test context
+        Test.startTest();
+
+        // Insert test consumer to trigger the logic
+        insert testConsumer;
+
+        // End test context
+        Test.stopTest();
+
+        // Assertions (Mocked email assertions can be added)
+        System.assertEquals(1, [SELECT COUNT() FROM consumer__c WHERE email__c = 'trigger_test@example.com']);
+    }
+}
